@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>URS | نظام إدارة الصيدليات المتكامل</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Cairo', sans-serif;
+            scroll-behavior: smooth;
+        }
+        
+        .gradient-dark {
+            background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 100%);
+        }
+        
+        .glass-effect {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-5px);
+            border-color: #3b82f6;
+        }
+        
+        .urs-shadow {
+            box-shadow: 0 20px 50px -12px rgba(30, 58, 138, 0.25);
+        }
+        /* تأثير النبض للأزرار العائمة */
+        
+        .pulse-animation {
+            box-shadow: 0 0 0 0 rgba(37, 211, 102, 1);
+            animation: pulse-green 2s infinite;
+        }
+        
+        @keyframes pulse-green {
+            0% {
+                transform: scale(0.95);
+                box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.7);
+            }
+            70% {
+                transform: scale(1);
+                box-shadow: 0 0 0 10px rgba(37, 211, 102, 0);
+            }
+            100% {
+                transform: scale(0.95);
+                box-shadow: 0 0 0 0 rgba(37, 211, 102, 0);
+            }
+        }
+        /* تحسينات للجوال */
+        
+        @media (max-width: 768px) {
+            .container {
+                padding-left: 1rem;
+                padding-right: 1rem;
+            }
+        }
+    </style>
+</head>
+
+<body class="bg-[#fcfdfe] text-slate-900 overflow-x-hidden">
+
+    <!-- Navigation -->
+    <header class="fixed w-full z-40 bg-white/90 backdrop-blur-lg border-b border-slate-100 transition-all duration-300" id="navbar">
+        <nav class="container mx-auto px-4 lg:px-6 py-3 lg:py-4 flex justify-between items-center relative">
+            <div class="flex items-center gap-3">
+                <!-- شعار الصورة في الهيدر -->
+                <img src="logo.png" alt="URS Logo" class="h-10 w-auto object-contain">
+                <div class="hidden sm:block border-r border-slate-200 pr-3 mr-3">
+                    <p class="text-[10px] font-bold text-slate-400 uppercase leading-none">Pharmacy</p>
+                    <p class="text-[10px] font-bold text-blue-700 uppercase">Solutions</p>
+                </div>
+            </div>
+
+            <!-- Desktop Menu -->
+            <div class="hidden lg:flex items-center space-x-reverse space-x-8 text-sm font-bold text-slate-600">
+                <a href="#about" class="hover:text-blue-700 transition">عن الشركة</a>
+                <a href="#features" class="hover:text-blue-700 transition">المزايا</a>
+                <a href="#modules" class="hover:text-blue-700 transition">الوحدات</a>
+                <a href="#government" class="hover:text-blue-700 transition">الربط الحكومي</a>
+                <a href="#contact" class="bg-slate-900 text-white px-5 py-2.5 rounded-xl hover:bg-blue-700 transition shadow-lg shadow-slate-200">ابدأ الآن</a>
+            </div>
+
+            <!-- Mobile Menu Button -->
+            <button id="mobile-menu-btn" class="lg:hidden text-slate-900 p-2 focus:outline-none" aria-label="القائمة">
+                <i class="fas fa-bars text-2xl"></i>
+            </button>
+        </nav>
+
+        <!-- Mobile Menu Dropdown -->
+        <div id="mobile-menu" class="hidden absolute top-full left-0 w-full bg-white border-t border-slate-100 shadow-xl lg:hidden flex-col">
+            <a href="#about" class="block py-4 px-6 border-b border-slate-50 text-slate-700 font-bold hover:bg-blue-50 hover:text-blue-700 transition">عن الشركة</a>
+            <a href="#features" class="block py-4 px-6 border-b border-slate-50 text-slate-700 font-bold hover:bg-blue-50 hover:text-blue-700 transition">المزايا</a>
+            <a href="#modules" class="block py-4 px-6 border-b border-slate-50 text-slate-700 font-bold hover:bg-blue-50 hover:text-blue-700 transition">الوحدات</a>
+            <a href="#government" class="block py-4 px-6 border-b border-slate-50 text-slate-700 font-bold hover:bg-blue-50 hover:text-blue-700 transition">الربط الحكومي</a>
+            <div class="p-4">
+                <a href="#contact" class="block text-center bg-slate-900 text-white py-3 rounded-xl hover:bg-blue-700 transition font-bold shadow-lg">ابدأ الآن</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Floating Action Buttons (Sticky Contacts) -->
+    <div class="fixed bottom-6 left-6 z-50 flex flex-col gap-3 lg:gap-4">
+        <!-- Phone Button -->
+        <a href="tel:00966500245866" class="w-12 h-12 lg:w-14 lg:h-14 bg-blue-600 rounded-full text-white flex items-center justify-center shadow-lg hover:bg-blue-700 transition-all duration-300 hover:-translate-y-1" title="اتصل بنا">
+            <i class="fas fa-phone-alt text-xl lg:text-2xl animate-bounce" style="animation-duration: 3s;"></i>
+        </a>
+
+        <!-- WhatsApp Button -->
+        <a href="https://wa.me/966500245866" target="_blank" class="w-12 h-12 lg:w-14 lg:h-14 bg-[#25D366] rounded-full text-white flex items-center justify-center shadow-lg pulse-animation hover:brightness-110 transition-all duration-300" title="تواصل عبر واتساب">
+            <i class="fab fa-whatsapp text-2xl lg:text-3xl"></i>
+        </a>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="relative pt-32 pb-16 lg:pt-52 lg:pb-40 overflow-hidden" id="about">
+        <div class="absolute top-0 right-0 -z-10 w-2/3 lg:w-1/3 h-full bg-blue-50/50 rounded-bl-[60px] lg:rounded-bl-[100px]"></div>
+        <div class="container mx-auto px-4 lg:px-6 flex flex-col lg:flex-row items-center gap-10 lg:gap-16">
+            <div class="lg:w-1/2 space-y-6 lg:space-y-8 text-center lg:text-right">
+                <div class="inline-flex items-center gap-2 bg-blue-50 text-blue-700 px-3 py-1.5 lg:px-4 lg:py-2 rounded-full text-xs lg:text-sm font-bold mx-auto lg:mx-0 shadow-sm border border-blue-100">
+                    <span class="relative flex h-2 w-2">
+                        <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75"></span>
+                    <span class="relative inline-flex rounded-full h-2 w-2 bg-blue-600"></span>
+                    </span>
+                    نظام ERP متكامل ومتوافق مع "رصد" و "فاتورة"
+                </div>
+                <h1 class="text-3xl sm:text-4xl lg:text-5xl font-black text-slate-900 leading-tight lg:leading-[1.1]">
+                    حوّل صيدليتك إلى <span class="text-blue-700">مركز ذكي</span> للإدارة المالية
+                </h1>
+                <p class="text-base lg:text-lg text-slate-500 max-w-xl leading-relaxed mx-auto lg:mx-0">
+                    نظام URS ليس مجرد برنامج كاشير، بل هو منصة محاسبية وتقنية شاملة مصممة لتمكين الصيادلة من التحكم الكامل في المخزون، المبيعات، والامتثال الحكومي بضغطة زر.
+                </p>
+                <div class="flex flex-col sm:flex-row gap-3 lg:gap-4 justify-center lg:justify-start">
+                    <a href="#contact" class="px-6 py-3 lg:px-8 lg:py-4 bg-blue-700 text-white rounded-xl lg:rounded-2xl font-bold text-base lg:text-lg shadow-xl shadow-blue-200 hover:bg-blue-800 transition text-center hover:shadow-2xl hover:-translate-y-1">طلب عرض تجريبي</a>
+                    <a href="#modules" class="px-6 py-3 lg:px-8 lg:py-4 bg-white text-slate-700 border border-slate-200 rounded-xl lg:rounded-2xl font-bold text-base lg:text-lg hover:bg-slate-50 transition text-center hover:border-blue-200">اكتشف المميزات</a>
+                </div>
+            </div>
+            <div class="lg:w-1/2 relative w-full">
+                <div class="relative z-10 urs-shadow rounded-2xl lg:rounded-[2rem] overflow-hidden border-4 lg:border-8 border-white">
+                    <img src="https://images.unsplash.com/photo-1576091160550-2173dba999ef?auto=format&fit=crop&q=80&w=1000" alt="Pharmacy Professional Environment" class="w-full h-auto object-cover">
+                </div>
+                <!-- Abstract UI elements -->
+                <div class="absolute -bottom-5 lg:-bottom-10 right-1/2 translate-x-1/2 lg:translate-x-0 lg:-right-10 bg-white p-4 lg:p-6 rounded-2xl lg:rounded-3xl shadow-2xl z-20 border border-slate-50 w-max max-w-[90%]">
+                    <div class="flex items-center gap-3 lg:gap-4">
+                        <div class="w-10 h-10 lg:w-12 lg:h-12 bg-green-100 text-green-600 rounded-full flex items-center justify-center text-sm lg:text-base">
+                            <i class="fas fa-chart-pie"></i>
+                        </div>
+                        <div class="text-right">
+                            <p class="text-[10px] lg:text-xs text-slate-400 font-bold">نمو المبيعات</p>
+                            <p class="text-base lg:text-lg font-black text-slate-900">+24% هذا الشهر</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Trust Badges / Values -->
+    <section class="py-8 lg:py-10 bg-slate-50 border-y border-slate-100" id="features">
+        <div class="container mx-auto px-4 lg:px-6">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-6 lg:gap-8 opacity-70 lg:opacity-60">
+                <div class="flex items-center justify-center gap-2 lg:gap-3 font-bold text-slate-600 text-sm lg:text-base">
+                    <i class="fas fa-shield-check text-xl lg:text-2xl text-blue-500"></i> مـوثوقية
+                </div>
+                <div class="flex items-center justify-center gap-2 lg:gap-3 font-bold text-slate-600 text-sm lg:text-base">
+                    <i class="fas fa-microchip text-xl lg:text-2xl text-blue-500"></i> ابـتكار
+                </div>
+                <div class="flex items-center justify-center gap-2 lg:gap-3 font-bold text-slate-600 text-sm lg:text-base">
+                    <i class="fas fa-bullseye text-xl lg:text-2xl text-blue-500"></i> دقــة
+                </div>
+                <div class="flex items-center justify-center gap-2 lg:gap-3 font-bold text-slate-600 text-sm lg:text-base">
+                    <i class="fas fa-handshake text-xl lg:text-2xl text-blue-500"></i> التـزام
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Modules Grid -->
+    <section id="modules" class="py-16 lg:py-24">
+        <div class="container mx-auto px-4 lg:px-6">
+            <div class="text-center max-w-3xl mx-auto mb-12 lg:mb-20">
+                <h2 class="text-xs lg:text-sm font-black text-blue-600 uppercase tracking-widest mb-2 lg:mb-3">الوحدات الأساسية</h2>
+                <h3 class="text-2xl lg:text-4xl font-black text-slate-900 leading-tight">نظام واحد، حلول غير محدودة</h3>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
+                <!-- Module 1 -->
+                <div class="p-6 lg:p-8 bg-white border border-slate-100 rounded-3xl lg:rounded-[2.5rem] feature-card transition-all duration-300 shadow-sm hover:shadow-md">
+                    <div class="w-12 h-12 lg:w-14 lg:h-14 bg-blue-50 text-blue-700 rounded-2xl flex items-center justify-center mb-4 lg:mb-6 text-lg lg:text-xl">
+                        <i class="fas fa-cash-register"></i>
+                    </div>
+                    <h4 class="text-lg lg:text-xl font-black mb-3 lg:mb-4">نقاط البيع (POS)</h4>
+                    <p class="text-slate-500 text-xs lg:text-sm leading-relaxed mb-4 lg:mb-6">واجهة بيع سريعة، دعم الباركود، إدارة العروض والخصومات، وربط تلقائي مع المخزون والمحاسبة.</p>
+                    <ul class="space-y-2 lg:space-y-3 text-xs font-bold text-slate-600">
+                        <li class="flex items-center gap-2 text-green-600"><i class="fas fa-check-circle"></i> دعم الفواتير الضريبية</li>
+                        <li class="flex items-center gap-2"><i class="fas fa-check-circle"></i> مبيعات نقدية وآجلة</li>
+                    </ul>
+                </div>
+
+                <!-- Module 2 -->
+                <div class="p-6 lg:p-8 bg-white border border-slate-100 rounded-3xl lg:rounded-[2.5rem] feature-card transition-all duration-300 shadow-sm hover:shadow-md">
+                    <div class="w-12 h-12 lg:w-14 lg:h-14 bg-indigo-50 text-indigo-700 rounded-2xl flex items-center justify-center mb-4 lg:mb-6 text-lg lg:text-xl">
+                        <i class="fas fa-calculator"></i>
+                    </div>
+                    <h4 class="text-lg lg:text-xl font-black mb-3 lg:mb-4">المحاسبة المالية</h4>
+                    <p class="text-slate-500 text-xs lg:text-sm leading-relaxed mb-4 lg:mb-6">إدارة القيود اليومية، مراكز التكلفة، التقارير الختامية، والميزانية العمومية بشكل آلي تماماً.</p>
+                    <ul class="space-y-2 lg:space-y-3 text-xs font-bold text-slate-600">
+                        <li class="flex items-center gap-2 text-green-600"><i class="fas fa-check-circle"></i> تقارير ضريبة القيمة المضافة</li>
+                        <li class="flex items-center gap-2"><i class="fas fa-check-circle"></i> إدارة المصاريف والعهد</li>
+                    </ul>
+                </div>
+
+                <!-- Module 3 -->
+                <div class="p-6 lg:p-8 bg-white border border-slate-100 rounded-3xl lg:rounded-[2.5rem] feature-card transition-all duration-300 shadow-sm hover:shadow-md">
+                    <div class="w-12 h-12 lg:w-14 lg:h-14 bg-emerald-50 text-emerald-700 rounded-2xl flex items-center justify-center mb-4 lg:mb-6 text-lg lg:text-xl">
+                        <i class="fas fa-warehouse"></i>
+                    </div>
+                    <h4 class="text-lg lg:text-xl font-black mb-3 lg:mb-4">إدارة المخزون</h4>
+                    <p class="text-slate-500 text-xs lg:text-sm leading-relaxed mb-4 lg:mb-6">تتبع دقيق للأدوية حسب "الباتش" وتواريخ الانتهاء، مع تنبيهات ذكية للنقص والهالك.</p>
+                    <ul class="space-y-2 lg:space-y-3 text-xs font-bold text-slate-600">
+                        <li class="flex items-center gap-2 text-green-600"><i class="fas fa-check-circle"></i> جرد دوري وسنوي</li>
+                        <li class="flex items-center gap-2"><i class="fas fa-check-circle"></i> تحويلات بين الفروع</li>
+                    </ul>
+                </div>
+
+                <!-- Module 4 -->
+                <div class="p-6 lg:p-8 bg-white border border-slate-100 rounded-3xl lg:rounded-[2.5rem] feature-card transition-all duration-300 shadow-sm hover:shadow-md">
+                    <div class="w-12 h-12 lg:w-14 lg:h-14 bg-orange-50 text-orange-700 rounded-2xl flex items-center justify-center mb-4 lg:mb-6 text-lg lg:text-xl">
+                        <i class="fas fa-shopping-cart"></i>
+                    </div>
+                    <h4 class="text-lg lg:text-xl font-black mb-3 lg:mb-4">المشتريات والموردين</h4>
+                    <p class="text-slate-500 text-xs lg:text-sm leading-relaxed mb-4 lg:mb-6">إدارة أوامر الشراء، متابعة فواتير الموردين، وتحليل أفضل أسعار الشراء لزيادة الربحية.</p>
+                    <ul class="space-y-2 lg:space-y-3 text-xs font-bold text-slate-600">
+                        <li class="flex items-center gap-2 text-green-600"><i class="fas fa-check-circle"></i> سجل كامل للموردين</li>
+                        <li class="flex items-center gap-2"><i class="fas fa-check-circle"></i> متابعة دفعات السداد</li>
+                    </ul>
+                </div>
+
+                <!-- Module 5 -->
+                <div class="p-6 lg:p-8 bg-white border border-slate-100 rounded-3xl lg:rounded-[2.5rem] feature-card transition-all duration-300 shadow-sm hover:shadow-md">
+                    <div class="w-12 h-12 lg:w-14 lg:h-14 bg-purple-50 text-purple-700 rounded-2xl flex items-center justify-center mb-4 lg:mb-6 text-lg lg:text-xl">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <h4 class="text-lg lg:text-xl font-black mb-3 lg:mb-4">العملاء والولاء</h4>
+                    <p class="text-slate-500 text-xs lg:text-sm leading-relaxed mb-4 lg:mb-6">بناء قاعدة بيانات قوية للعملاء، تتبع سجل مشترياتهم، وتفعيل برامج النقاط والولاء.</p>
+                    <ul class="space-y-2 lg:space-y-3 text-xs font-bold text-slate-600">
+                        <li class="flex items-center gap-2 text-green-600"><i class="fas fa-check-circle"></i> ملف طبي لكل عميل</li>
+                        <li class="flex items-center gap-2"><i class="fas fa-check-circle"></i> إرسال تنبيهات العروض</li>
+                    </ul>
+                </div>
+
+                <!-- Module 6 -->
+                <div class="p-6 lg:p-8 bg-blue-700 text-white rounded-3xl lg:rounded-[2.5rem] shadow-xl shadow-blue-200">
+                    <div class="w-12 h-12 lg:w-14 lg:h-14 bg-white/20 text-white rounded-2xl flex items-center justify-center mb-4 lg:mb-6 text-lg lg:text-xl">
+                        <i class="fas fa-cloud-upload-alt"></i>
+                    </div>
+                    <h4 class="text-lg lg:text-xl font-black mb-3 lg:mb-4">نظام سحابي 100%</h4>
+                    <p class="text-blue-100 text-xs lg:text-sm leading-relaxed mb-4 lg:mb-6">لا حاجة لسيرفرات مكلفة. بياناتك مشفرة ومحفوظة سحابياً، ويمكنك إدارتها من أي مكان في العالم.</p>
+                    <div class="pt-4 border-t border-white/10">
+                        <span class="text-[10px] lg:text-xs font-bold uppercase tracking-widest text-blue-200">آمن • سريع • موثوق</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Detailed Section 1: Dashboard Focus -->
+    <section class="py-16 lg:py-24 bg-slate-900 text-white overflow-hidden relative">
+        <div class="absolute top-0 left-0 w-full h-full opacity-10">
+            <div class="absolute top-10 left-10 w-96 h-96 bg-blue-500 rounded-full blur-[120px]"></div>
+        </div>
+        <div class="container mx-auto px-4 lg:px-6 relative z-10">
+            <div class="flex flex-col lg:flex-row items-center gap-10 lg:gap-20">
+                <div class="lg:w-1/2 order-2 lg:order-1 w-full">
+                    <img src="2.png" alt="Advanced Data Analytics Dashboard" class="w-full h-auto rounded-2xl lg:rounded-3xl shadow-2xl border border-white/10">
+                </div>
+                <div class="lg:w-1/2 order-1 lg:order-2 space-y-6 lg:space-y-8 text-center lg:text-right">
+                    <h3 class="text-2xl lg:text-4xl font-black leading-tight">تقارير وتحليلات <br><span class="text-blue-400">تنبؤية لمستقبل صيدليتك</span></h3>
+                    <p class="text-slate-400 text-base lg:text-lg">نظام URS يحلل مبيعاتك التاريخية ليخبرك بالأصناف الأكثر ربحية، ومواسم الطلب، ويساعدك على تقليل الهدر بنسبة تصل إلى 30%.</p>
+                    <div class="grid grid-cols-2 gap-4 lg:gap-6">
+                        <div class="p-4 lg:p-6 bg-white/5 rounded-2xl border border-white/10">
+                            <p class="text-2xl lg:text-3xl font-black text-blue-400 mb-1">0%</p>
+                            <p class="text-xs lg:text-sm text-slate-300">أخطاء محاسبية</p>
+                        </div>
+                        <div class="p-4 lg:p-6 bg-white/5 rounded-2xl border border-white/10">
+                            <p class="text-2xl lg:text-3xl font-black text-green-400 mb-1">24/7</p>
+                            <p class="text-xs lg:text-sm text-slate-300">مراقبة المخزون</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Government Compliance Section -->
+    <section id="government" class="py-16 lg:py-24 bg-white">
+        <div class="container mx-auto px-4 lg:px-6">
+            <div class="flex flex-col lg:flex-row items-center gap-10 lg:gap-16">
+                <div class="lg:w-1/2 space-y-6 text-center lg:text-right">
+                    <div class="w-16 h-2 lg:w-20 bg-blue-700 mx-auto lg:mx-0"></div>
+                    <h3 class="text-2xl lg:text-4xl font-black text-slate-900">امتثال حكومي كامل <br>بدون مجهود</h3>
+                    <p class="text-base lg:text-lg text-slate-500">نحن ندرك تعقيدات القوانين المحلية، لذا صممنا URS ليكون متوافقاً تلقائياً مع كافة الجهات التنظيمية في المملكة.</p>
+
+                    <div class="space-y-4">
+                        <div class="flex items-start gap-4 p-4 rounded-2xl hover:bg-blue-50 transition border border-transparent hover:border-blue-100 text-right">
+                            <div class="w-10 h-10 lg:w-12 lg:h-12 shrink-0 bg-white shadow-md rounded-xl flex items-center justify-center text-blue-700 text-lg lg:text-xl"><i class="fas fa-fingerprint"></i></div>
+                            <div>
+                                <h5 class="font-bold text-slate-900 text-base lg:text-lg">نظام رصد (الغذاء والدواء)</h5>
+                                <p class="text-xs lg:text-sm text-slate-500 leading-relaxed">تتبع مسار الدواء بالكامل وإرسال التقارير المطلوبة آلياً.</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-4 p-4 rounded-2xl hover:bg-blue-50 transition border border-transparent hover:border-blue-100 text-right">
+                            <div class="w-10 h-10 lg:w-12 lg:h-12 shrink-0 bg-white shadow-md rounded-xl flex items-center justify-center text-blue-700 text-lg lg:text-xl"><i class="fas fa-file-invoice-dollar"></i></div>
+                            <div>
+                                <h5 class="font-bold text-slate-900 text-base lg:text-lg">الفوترة الإلكترونية (ZATCA)</h5>
+                                <p class="text-xs lg:text-sm text-slate-500 leading-relaxed">متوافق مع المرحلة الأولى والثانية (الربط والتكامل).</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="lg:w-1/2 w-full">
+                    <div class="bg-blue-50 p-6 lg:p-10 rounded-[2rem] lg:rounded-[3rem] relative">
+                        <img src="4.png" alt="Government Compliance Concept" class="w-full h-auto rounded-2xl shadow-xl">
+
+                        <div class="absolute -top-3 -left-3 lg:-top-5 lg:-left-5 bg-white px-4 py-3 lg:px-6 lg:py-4 rounded-xl lg:rounded-2xl shadow-xl border border-blue-100">
+                            <p class="text-[10px] lg:text-xs font-bold text-blue-700">معتمد من ZATCA</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Support & Onboarding -->
+    <section class="py-16 lg:py-24 bg-slate-50">
+        <div class="container mx-auto px-4 lg:px-6">
+            <div class="grid lg:grid-cols-2 gap-10 lg:gap-16 items-center">
+                <div class="relative w-full order-2 lg:order-1">
+                    <img src="3.png" alt="Training and Support" class="w-full h-auto rounded-[2rem] lg:rounded-[3rem] z-10 relative shadow-lg">
+                    <div class="absolute -bottom-4 -right-4 lg:-bottom-8 lg:-right-8 w-40 h-40 lg:w-64 lg:h-64 bg-blue-700 rounded-full -z-10 opacity-10"></div>
+                </div>
+                <div class="space-y-6 lg:space-y-8 order-1 lg:order-2 text-center lg:text-right">
+                    <h3 class="text-2xl lg:text-4xl font-black text-slate-900 leading-tight">دعم فني <br>يرافقك في كل خطوة</h3>
+                    <p class="text-slate-500 text-base lg:text-lg">نحن لا نتركك وحيداً بعد البيع. فريقنا المختص يقوم بتركيب النظام، تدريب موظفيك، وضمان انتقال بياناتك القديمة بكل سلاسة.</p>
+                    <ul class="space-y-3 lg:space-y-4 inline-block text-right">
+                        <li class="flex items-center gap-3 font-bold text-slate-700 text-sm lg:text-base">
+                            <span class="w-6 h-6 bg-green-500 text-white rounded-full flex items-center justify-center text-[10px] shrink-0"><i class="fas fa-check"></i></span> دعم فني عبر الهاتف والدردشة 24/7
+                        </li>
+                        <li class="flex items-center gap-3 font-bold text-slate-700 text-sm lg:text-base">
+                            <span class="w-6 h-6 bg-green-500 text-white rounded-full flex items-center justify-center text-[10px] shrink-0"><i class="fas fa-check"></i></span> زيارات ميدانية للصيانة والتدريب
+                        </li>
+                        <li class="flex items-center gap-3 font-bold text-slate-700 text-sm lg:text-base">
+                            <span class="w-6 h-6 bg-green-500 text-white rounded-full flex items-center justify-center text-[10px] shrink-0"><i class="fas fa-check"></i></span> تحديثات شهرية مجانية لمواكبة السوق
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact-->
+    <section id="contact" class="py-16 lg:py-24 bg-white">
+        <div class="container mx-auto px-4 lg:px-6">
+            <div class="max-w-5xl mx-auto gradient-dark rounded-[2.5rem] lg:rounded-[3.5rem] p-6 lg:p-16 text-white relative overflow-hidden">
+                <div class="relative z-10">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-8 items-center text-right">
+                        <!-- Left: Heading + quick contacts -->
+                        <div class="order-1">
+                            <h2 class="text-2xl lg:text-4xl font-black mb-4 leading-tight">انضم إلى مئات الصيدليات <br>التي تثق في URS</h2>
+                            <p class="text-blue-100 mb-6 text-sm lg:text-lg max-w-xl">فريقنا جاهز لمساعدتك في أتمتة صيدليتك ورفع كفاءة عملياتك المالية اليوم. املأ النموذج وسنعاود الاتصال بك خلال 24 ساعة.</p>
+
+                            <div class="flex flex-col sm:flex-row gap-4">
+                                <a href="tel:00966500245866" class="flex items-center gap-4 bg-white/10 px-5 py-3 lg:px-6 lg:py-4 rounded-xl lg:rounded-2xl border border-white/20 hover:bg-white/20 transition cursor-pointer">
+                                    <i class="fas fa-phone-alt text-xl lg:text-2xl text-blue-400"></i>
+                                    <div class="text-right">
+                                        <p class="text-[10px] text-blue-200 uppercase font-bold">اتصل بنا</p>
+                                        <p class="font-black text-sm dir-ltr">050 024 5866</p>
+                                    </div>
+                                </a>
+                                <a href="mailto:Urs.sa66@gmail.com" class="flex items-center gap-4 bg-white/10 px-5 py-3 lg:px-6 lg:py-4 rounded-xl lg:rounded-2xl border border-white/20 hover:bg-white/20 transition cursor-pointer">
+                                    <i class="fas fa-envelope text-xl lg:text-2xl text-blue-400"></i>
+                                    <div class="text-right">
+                                        <p class="text-[10px] text-blue-200 uppercase font-bold">راسلنا</p>
+                                        <p class="font-black text-xs lg:text-sm">Urs.sa66@gmail.com</p>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+
+                        <!-- Right: Contact Form -->
+                        <div class="order-2">
+                            <form class="bg-white/5 p-5 lg:p-6 rounded-2xl border border-white/10 text-right" onsubmit="return false;" aria-label="نموذج التواصل">
+                                <div class="grid grid-cols-1 gap-3 lg:gap-4">
+                                    <label class="text-xs text-blue-100 font-bold" for="contact-name">الاسم</label>
+                                    <input id="contact-name" name="name" type="text" placeholder="الاسم الكامل" class="w-full px-4 py-3 rounded-lg bg-white/10 placeholder-blue-100 text-white border border-transparent focus:outline-none focus:border-blue-300 text-sm" required>
+
+                                    <label class="text-xs text-blue-100 font-bold" for="contact-phone">رقم الهاتف</label>
+                                    <input id="contact-phone" name="phone" type="tel" placeholder="05xxxxxxxx" class="w-full px-4 py-3 rounded-lg bg-white/10 placeholder-blue-100 text-white border border-transparent focus:outline-none focus:border-blue-300 text-sm" required>
+
+                                    <label class="text-xs text-blue-100 font-bold" for="contact-email">البريد الإلكتروني</label>
+                                    <input id="contact-email" name="email" type="email" placeholder="name@example.com" class="w-full px-4 py-3 rounded-lg bg-white/10 placeholder-blue-100 text-white border border-transparent focus:outline-none focus:border-blue-300 text-sm">
+
+                                    <label class="text-xs text-blue-100 font-bold" for="contact-message">الرسالة</label>
+                                    <textarea id="contact-message" name="message" rows="4" placeholder="كيف يمكننا مساعدتك؟" class="w-full px-4 py-3 rounded-lg bg-white/10 placeholder-blue-100 text-white border border-transparent focus:outline-none focus:border-blue-300 text-sm"></textarea>
+
+                                    <div class="flex gap-3 justify-end items-center mt-2">
+                                        <button type="button" onclick="confirmSubmit(this)" class="px-5 py-2.5 lg:px-6 lg:py-3 bg-blue-400 hover:bg-blue-500 rounded-xl font-bold text-white flex items-center gap-2 text-sm lg:text-base transition">
+                                            <span>إرسال عبر واتساب</span>
+                                            <i class="fab fa-whatsapp text-lg"></i>
+                                        </button>
+                                        <button type="reset" class="px-4 py-2 bg-white/10 text-blue-100 rounded-lg text-xs lg:text-sm hover:bg-white/20 transition">مسح</button>
+                                    </div>
+
+                                    <div id="successBox" class="hidden mt-3 p-4 bg-green-50 text-green-900 rounded-lg font-bold text-sm" role="status" aria-live="polite"></div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <!-- Background visual -->
+                <div class="absolute -bottom-20 -right-20 w-60 h-60 lg:w-80 lg:h-80 bg-blue-500/10 rounded-full blur-3xl"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-slate-950 text-slate-400 py-12 lg:py-20 border-t border-slate-900 text-sm">
+        <div class="container mx-auto px-4 lg:px-6">
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12 mb-10 lg:mb-16 text-center lg:text-right">
+                <div class="col-span-1 lg:col-span-2 space-y-4 lg:space-y-6">
+                    <div class="text-3xl font-black text-white">URS</div>
+                    <p class="max-w-md leading-relaxed mx-auto lg:mx-0">الشركة الرائدة في تقديم الحلول البرمجية لقطاع الصيدليات في المملكة العربية السعودية. نجمع بين التقنية الحديثة والامتثال الحكومي لتسهيل أعمالكم.</p>
+                    <div class="flex gap-4 justify-center lg:justify-start">
+                        <a href="https://www.instagram.com/urs.sa66?igsh=anhycHJ5Ynp5M296&utm_source=qr" target="_blank" class="w-10 h-10 lg:w-12 lg:h-12 bg-white/5 rounded-full flex items-center justify-center hover:bg-pink-600 hover:text-white transition"><i class="fab fa-instagram text-lg lg:text-xl"></i></a>
+                        <!-- Added placeholder links for others as requested to be ready -->
+                        <a href="#" class="w-10 h-10 lg:w-12 lg:h-12 bg-white/5 rounded-full flex items-center justify-center hover:bg-blue-600 hover:text-white transition"><i class="fab fa-twitter text-lg lg:text-xl"></i></a>
+                        <a href="#" class="w-10 h-10 lg:w-12 lg:h-12 bg-white/5 rounded-full flex items-center justify-center hover:bg-blue-700 hover:text-white transition"><i class="fab fa-linkedin-in text-lg lg:text-xl"></i></a>
+                    </div>
+                </div>
+                <div>
+                    <h5 class="text-white font-black mb-4 lg:mb-6">روابط سريعة</h5>
+                    <ul class="space-y-3 lg:space-y-4 font-bold">
+                        <li><a href="#about" class="hover:text-blue-500 transition">عن الشركة</a></li>
+                        <li><a href="#modules" class="hover:text-blue-500 transition">الوحدات البرمجية</a></li>
+                        <li><a href="#government" class="hover:text-blue-500 transition">الربط الحكومي</a></li>
+                        <li><a href="#contact" class="hover:text-blue-500 transition">طلب عرض</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h5 class="text-white font-black mb-4 lg:mb-6">تواصل معنا</h5>
+                    <ul class="space-y-3 lg:space-y-4 font-bold">
+                        <li class="flex items-center gap-3 justify-center lg:justify-start"><i class="fas fa-envelope text-blue-500"></i> Urs.sa66@gmail.com</li>
+                        <li class="flex items-center gap-3 justify-center lg:justify-start"><i class="fas fa-phone-alt text-blue-500"></i> <span dir="ltr">050 024 5866</span></li>
+                        <li class="flex items-center gap-3 justify-center lg:justify-start"><i class="fas fa-map-marker-alt text-blue-500"></i> المملكة العربية السعودية</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="pt-8 border-t border-white/5 text-center text-[10px] lg:text-xs font-bold uppercase tracking-[0.2em]">
+                حقوق النشر © 2024 لشركة URS. صنعت لتمكين قطاع الصيدليات.
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile Menu Toggle Logic
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+            mobileMenu.classList.toggle('flex');
+        });
+
+        // Close mobile menu when clicking a link
+        document.querySelectorAll('#mobile-menu a').forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.add('hidden');
+                mobileMenu.classList.remove('flex');
+            });
+        });
+
+        function confirmSubmit(btn) {
+            // Select elements
+            const success = document.getElementById('successBox');
+            const nameInput = document.getElementById('contact-name');
+            const phoneInput = document.getElementById('contact-phone');
+            const emailInput = document.getElementById('contact-email');
+            const messageInput = document.getElementById('contact-message');
+
+            // Get values
+            const name = nameInput.value.trim();
+            const phone = phoneInput.value.trim();
+            const email = emailInput ? emailInput.value.trim() : '';
+            const message = messageInput ? messageInput.value.trim() : '';
+
+            // Validation
+            if (!name || !phone) {
+                if (success) {
+                    success.textContent = 'الرجاء تعبئة الاسم ورقم الهاتف.';
+                    success.className = 'mt-3 p-4 bg-red-100 text-red-800 rounded-lg font-bold block';
+                    success.classList.remove('hidden');
+                }
+                if (!name) nameInput.focus();
+                else phoneInput.focus();
+                return;
+            }
+
+            // Visual Feedback
+            const originalContent = btn.innerHTML;
+            btn.innerHTML = '<i class="fas fa-circle-notch animate-spin"></i> جاري التحويل...';
+            btn.disabled = true;
+
+            // WhatsApp Logic
+            const waNumber = '966500245866';
+            const lines = [
+                '*طلب تواصل جديد من موقع URS*',
+                '',
+                `*الاسم:* ${name}`,
+                `*الهاتف:* ${phone}`
+            ];
+
+            if (email) lines.push(`*البريد:* ${email}`);
+            if (message) lines.push(`*الرسالة:* \n${message}`);
+
+            const text = encodeURIComponent(lines.join('\n'));
+            const waUrl = `https://wa.me/${waNumber}?text=${text}`;
+
+            // Open WhatsApp immediately (Fix for popup blockers)
+            window.open(waUrl, '_blank');
+
+            // Success Message
+            if (success) {
+                success.textContent = 'تم فتح واتساب لإرسال الطلب.';
+                success.className = 'mt-3 p-4 bg-green-50 text-green-900 rounded-lg font-bold block';
+                success.classList.remove('hidden');
+            }
+
+            // Reset button after 3 seconds
+            setTimeout(() => {
+                btn.innerHTML = originalContent;
+                btn.disabled = false;
+            }, 3000);
+        }
+
+        // Scroll Reveal Animation
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, {
+            threshold: 0.1
+        });
+
+        document.querySelectorAll('section').forEach(section => {
+            section.style.opacity = '0';
+            section.style.transform = 'translateY(30px)';
+            section.style.transition = 'all 0.8s ease-out';
+            observer.observe(section);
+        });
+    </script>
+</body>
+
+</html>
